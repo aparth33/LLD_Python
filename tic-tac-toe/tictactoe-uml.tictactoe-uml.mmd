@@ -1,0 +1,35 @@
+classDiagram
+    class Player {
+        <<abstract>>
+        +get_move() abstract
+        +get_piece() abstract
+    }
+    
+    class HumanPlayer {
+        +name: str
+        +piece: str
+        +get_move() tuple
+        +get_piece() str
+    }
+    
+    class Board {
+        +size: int
+        +board: list
+        +display() void
+        +is_full() bool
+        +is_cell_empty(row: int, col: int) bool
+        +place_piece(row: int, col: int, piece: str) bool
+        +check_winner(piece: str) bool
+    }
+    
+    class Game {
+        +players: list
+        +board: Board
+        +current_player_index: int
+        +switch_player() void
+        +play() void
+    }
+    
+    Player <|-- HumanPlayer : implements
+    Game "1" *-- "1" Board : contains
+    Game "1" *-- "2..*" Player : contains

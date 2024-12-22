@@ -1,0 +1,84 @@
+The Python code implements a simple multi-player Tic-Tac-Toe game. Let's walk through the key parts of the implementation step by step, followed by an explanation of how low-level design principles and SOLID principles are applied.
+
+1. Main Function (main.py)
+In the main.py file:
+
+User Input for Setup: The game begins by asking the user for the number of players and the size of the board.
+Dynamic Player Creation: Players are created based on input, with unique symbols to differentiate them. Each player gets a name and a symbol (like "X" or "O").
+Game Initialization: The Board object is created with the specified size, and then the Game object is initialized with the players and board.
+Game Start: The game is started by calling the play method of the Game class.
+2. Board Class (board.py)
+The Board class is responsible for maintaining and managing the state of the Tic-Tac-Toe board.
+
+Attributes:
+
+size: Represents the size of the board (e.g., 3x3, 4x4).
+board: A 2D list (list of lists) that represents the grid, initialized with spaces to indicate empty cells.
+Methods:
+
+display: Prints the board to the console.
+is_full: Checks if the board is full (i.e., no empty cells left).
+is_cell_empty: Checks if a specific cell is empty.
+place_piece: Places a player's symbol on the board if the cell is empty.
+check_winner: Checks if a player has won by checking rows, columns, and diagonals.
+3. Game Class (game.py)
+The Game class manages the flow of the game.
+
+Attributes:
+
+players: A list of players (could be more than two).
+board: The Board object used for playing the game.
+current_player_index: Tracks which player's turn it is.
+Methods:
+
+switch_player: Switches to the next player in the list.
+play: This is the main game loop. It continuously:
+Displays the board.
+Prompts the current player for a move.
+Places the piece on the board.
+Checks for a winner or if the game is a tie.
+Switches players.
+4. Player Class (player.py)
+The Player class is an abstract base class, and HumanPlayer is a concrete subclass.
+
+Player Class:
+
+get_move: Abstract method to be implemented by subclasses for getting the player's move.
+get_piece: Abstract method to be implemented by subclasses for getting the player's symbol.
+HumanPlayer Class:
+
+Implements get_move to prompt the user for a move and parse it into row and column indices.
+Implements get_piece to return the player's symbol.
+Low-Level Design Principles
+Encapsulation:
+
+Each class encapsulates its data and logic. For example, the Board class manages its own grid and the logic for checking if a cell is empty or if there's a winner. This keeps the game logic separate from the board management, ensuring each component has a clear responsibility.
+Abstraction:
+
+The Player class uses abstraction to define the general interface that any player (e.g., human, AI) must implement. This hides the details of how players get their moves, allowing for easier extensions (e.g., adding AI players later).
+Separation of Concerns:
+
+The game is divided into multiple classes, each responsible for a specific aspect of the game: the Board handles the board, the Player class manages player-specific behavior, and the Game class controls the flow of the game. This keeps each class focused on its own responsibilities.
+SOLID Principles
+Single Responsibility Principle (SRP):
+
+Each class has one reason to change. For example:
+Board is only responsible for the board state and related operations.
+Player is only responsible for managing player-specific behavior (like getting moves and holding a symbol).
+Game is responsible for the game flow and determining when the game ends.
+Open/Closed Principle (OCP):
+
+The code is open for extension but closed for modification. For instance:
+If we wanted to add an AI player, we could create a new subclass of Player (e.g., AIPlayer) without modifying existing code.
+The Game class can handle any number of players, so it's flexible without requiring changes to its logic.
+Liskov Substitution Principle (LSP):
+
+Subtypes must be substitutable for their base types. The HumanPlayer class correctly inherits from Player and implements all required methods (get_move and get_piece). This ensures that any Player object can be used interchangeably in the Game class.
+Interface Segregation Principle (ISP):
+
+There is no violation of ISP because the Player class defines just the essential methods (get_move, get_piece) needed for player interaction. The HumanPlayer class implements these methods specifically, and if other types of players (e.g., AI players) are added, they would implement only what's necessary for their behavior.
+Dependency Inversion Principle (DIP):
+
+The Game class depends on abstractions (the Player class) rather than concrete implementations. It doesn't care whether the player is a HumanPlayer or another subclass. This allows for flexibility and easier testing since the Game class can work with any subclass of Player.
+Conclusion
+This implementation demonstrates good design practices using low-level principles like encapsulation, abstraction, and separation of concerns, as well as SOLID principles like SRP, OCP, LSP, ISP, and DIP. The use of abstractions, especially with the Player class, makes the game easy to extend with new player types or additional features in the future.

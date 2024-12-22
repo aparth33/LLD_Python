@@ -1,0 +1,8 @@
+tic_tac_toe/
+│
+├── board.py           # Handles the game board and related logic
+├── player.py          # Defines the Player class and player types
+├── game.py            # Manages the game flow (turns, checking for winners, etc.)
+├── main.py            # Entry point of the game to run the game loop
+│
+└── README.md          # Documentation about the game
